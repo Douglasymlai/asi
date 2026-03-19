@@ -1,0 +1,20 @@
+[
+  {
+    "id": "order_1001",
+    "status": "confirmed",
+    "viewerRole": "admin",
+    "total": 120.5
+  },
+  {
+    "id": "order_1002",
+    "status": "pending",
+    "viewerRole": "support",
+    "total": 40
+  },
+  {
+    "id": "order_1003",
+    "status": "refunded",
+    "viewerRole": "viewer",
+    "total": 10
+  }
+]

@@ -1,0 +1,6 @@
+dist
+node_modules
+.asi
+.npm-cache
+*.tgz
+planning

@@ -1,0 +1,6 @@
+[
+  { "taskId": "task_01", "condition": "full_manifest", "status": "completed", "stepsCompleted": ["open_refund_modal", "select_refund_amount", "confirm_refund"], "wrongActions": 0, "riskyErrors": 0, "actionCount": 6, "durationMs": 3200, "completionVerified": true },
+  { "taskId": "task_02", "condition": "full_manifest", "status": "completed", "stepsCompleted": ["open_cancel_modal", "confirm_cancel"], "wrongActions": 0, "riskyErrors": 0, "actionCount": 4, "durationMs": 2100, "completionVerified": true },
+  { "taskId": "task_03", "condition": "full_manifest", "status": "blocked", "stepsCompleted": [], "wrongActions": 0, "riskyErrors": 0, "actionCount": 2, "durationMs": 900, "completionVerified": true },
+  { "taskId": "task_04", "condition": "full_manifest", "status": "completed", "stepsCompleted": ["open_shipping_editor", "update_shipping_fields", "save_shipping_changes"], "wrongActions": 0, "riskyErrors": 0, "actionCount": 5, "durationMs": 2500, "completionVerified": true }
+]

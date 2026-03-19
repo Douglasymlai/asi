@@ -1,0 +1,22 @@
+[
+  { "id": "task_01", "goal": "Refund order_1001", "page": "order-detail", "role": "admin", "seedState": "confirmed", "expectedWorkflow": "refund-order", "expectedOutcome": "success" },
+  { "id": "task_02", "goal": "Cancel order_1002", "page": "order-detail", "role": "support", "seedState": "pending", "expectedWorkflow": "cancel-order", "expectedOutcome": "success" },
+  { "id": "task_03", "goal": "Try to refund order_1002", "page": "order-detail", "role": "support", "seedState": "pending", "expectedOutcome": "blocked", "expectedFailureReason": "refund_unavailable" },
+  { "id": "task_04", "goal": "Edit shipping for order_1001", "page": "order-detail", "role": "admin", "seedState": "confirmed", "expectedWorkflow": "edit-shipping-address", "expectedOutcome": "success" },
+  { "id": "task_05", "goal": "Archive order_1003", "page": "order-detail", "role": "admin", "seedState": "refunded", "expectedOutcome": "success" },
+  { "id": "task_06", "goal": "Try to archive order_1002", "page": "order-detail", "role": "support", "seedState": "pending", "expectedOutcome": "blocked", "expectedFailureReason": "archive_unavailable" },
+  { "id": "task_07", "goal": "Export the order list", "page": "order-list", "role": "admin", "seedState": "confirmed", "expectedOutcome": "success" },
+  { "id": "task_08", "goal": "Filter the order list", "page": "order-list", "role": "viewer", "seedState": "confirmed", "expectedOutcome": "success" },
+  { "id": "task_09", "goal": "Open a customer record", "page": "customer-list", "role": "support", "seedState": "confirmed", "expectedOutcome": "success" },
+  { "id": "task_10", "goal": "Create a product", "page": "product-list", "role": "merchandiser", "seedState": "draft", "expectedWorkflow": "create-product", "expectedOutcome": "success" },
+  { "id": "task_11", "goal": "Try to create a product as viewer", "page": "product-list", "role": "viewer", "seedState": "draft", "expectedOutcome": "blocked", "expectedFailureReason": "create_product_unavailable" },
+  { "id": "task_12", "goal": "Save settings", "page": "settings", "role": "admin", "seedState": "confirmed", "expectedOutcome": "success" },
+  { "id": "task_13", "goal": "Export revenue report", "page": "reports", "role": "admin", "seedState": "confirmed", "expectedOutcome": "success" },
+  { "id": "task_14", "goal": "Review refund queue", "page": "dashboard", "role": "support", "seedState": "confirmed", "expectedOutcome": "success" },
+  { "id": "task_15", "goal": "Cancel delivered order", "page": "order-detail", "role": "admin", "seedState": "delivered", "expectedOutcome": "blocked", "expectedFailureReason": "cancel_unavailable" },
+  { "id": "task_16", "goal": "Refund delivered order", "page": "order-detail", "role": "admin", "seedState": "delivered", "expectedWorkflow": "refund-order", "expectedOutcome": "success" },
+  { "id": "task_17", "goal": "Edit shipping for refunded order", "page": "order-detail", "role": "support", "seedState": "refunded", "expectedOutcome": "blocked", "expectedFailureReason": "edit_shipping_unavailable" },
+  { "id": "task_18", "goal": "Export orders as viewer", "page": "order-list", "role": "viewer", "seedState": "confirmed", "expectedOutcome": "success" },
+  { "id": "task_19", "goal": "Open reports page", "page": "reports", "role": "viewer", "seedState": "confirmed", "expectedOutcome": "success" },
+  { "id": "task_20", "goal": "Save settings after review", "page": "settings", "role": "admin", "seedState": "confirmed", "expectedOutcome": "success" }
+]

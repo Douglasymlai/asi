@@ -1,0 +1,20 @@
+{
+  "framework": "next",
+  "surface": "web",
+  "router": "next-app",
+  "srcDir": "src",
+  "routesDir": "src/app",
+  "workflowsDir": "workflows",
+  "outputFile": "asi-manifest.json",
+  "cacheDir": ".asi",
+  "componentDirs": ["src/components/ui"],
+  "designSystem": {
+    "buttonComponent": "Button",
+    "destructiveVariant": "destructive",
+    "modalComponent": "Dialog"
+  },
+  "overrides": {
+    "pages": {},
+    "actions": {}
+  }
+}

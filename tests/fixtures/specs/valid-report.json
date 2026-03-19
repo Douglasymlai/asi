@@ -1,0 +1,18 @@
+{
+  "asi_report": "1.0",
+  "timestamp": "2025-03-19T12:05:00Z",
+  "agent": "test-agent/1.0",
+  "app": "fixture-store-admin",
+  "workflow": "refund-order",
+  "status": "completed",
+  "steps_completed": ["open_refund_modal", "select_refund_amount", "confirm_refund"],
+  "steps_skipped": ["add_refund_note"],
+  "duration_ms": 3200,
+  "entity": {
+    "type": "order",
+    "id": "order_1001",
+    "stateTransition": "confirmed → refunded"
+  },
+  "completion_verified": true,
+  "notes": null
+}

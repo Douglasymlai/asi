@@ -1,0 +1,434 @@
+{
+  "asi": "1.0",
+  "app": {
+    "name": "react-shadcn-admin",
+    "framework": "react",
+    "domain": "operations",
+    "generatedAt": "2026-03-19T11:42:24.083Z"
+  },
+  "pages": [
+    {
+      "id": "customer-list",
+      "route": "/customers",
+      "type": "list",
+      "purpose": "Customer directory",
+      "entity": "customer"
+    },
+    {
+      "id": "dashboard",
+      "route": "/",
+      "type": "dashboard",
+      "purpose": "Operations Overview"
+    },
+    {
+      "id": "order-detail",
+      "route": "/orders/:id",
+      "type": "detail",
+      "purpose": "Order detail workspace",
+      "entity": "order",
+      "dynamic": true
+    },
+    {
+      "id": "order-list",
+      "route": "/orders",
+      "type": "list",
+      "purpose": "Browse and triage orders",
+      "entity": "order"
+    }
+  ],
+  "pageDetails": {
+    "customer-list": {
+      "id": "customer-list",
+      "route": "/customers",
+      "type": "list",
+      "purpose": "Customer directory",
+      "entity": "customer",
+      "dynamic": false,
+      "sourceFile": "src/pages/customers/index.tsx",
+      "confidence": 0.6,
+      "actions": [
+        {
+          "id": "open_customer",
+          "label": "Open Customer",
+          "intent": "open_customer",
+          "risk": "low",
+          "requiresConfirmation": false,
+          "sideEffects": [],
+          "reversible": true,
+          "confidence": 0.5,
+          "source": {
+            "file": "src/pages/customers/index.tsx",
+            "component": "Button"
+          }
+        }
+      ],
+      "workflows": []
+    },
+    "dashboard": {
+      "id": "dashboard",
+      "route": "/",
+      "type": "dashboard",
+      "purpose": "Operations Overview",
+      "dynamic": false,
+      "sourceFile": "src/pages/index.tsx",
+      "confidence": 0.6,
+      "actions": [
+        {
+          "id": "review_alerts",
+          "label": "Review Alerts",
+          "intent": "review_alerts",
+          "risk": "low",
+          "requiresConfirmation": false,
+          "sideEffects": [],
+          "reversible": true,
+          "confidence": 0.5,
+          "source": {
+            "file": "src/pages/index.tsx",
+            "component": "Button"
+          }
+        }
+      ],
+      "workflows": []
+    },
+    "order-detail": {
+      "id": "order-detail",
+      "route": "/orders/:id",
+      "type": "detail",
+      "purpose": "Order detail workspace",
+      "entity": "order",
+      "dynamic": true,
+      "sourceFile": "src/pages/orders/[id].tsx",
+      "confidence": 0.75,
+      "actions": [
+        {
+          "id": "refund_order",
+          "label": "Refund",
+          "intent": "refund_order",
+          "risk": "high",
+          "requiresConfirmation": true,
+          "sideEffects": [
+            "state_change"
+          ],
+          "reversible": false,
+          "availableWhen": {
+            "status": [
+              "confirmed",
+              "shipped",
+              "delivered"
+            ],
+            "role": [
+              "admin"
+            ]
+          },
+          "confidence": 0.6,
+          "source": {
+            "file": "src/pages/orders/[id].tsx",
+            "component": "Button"
+          }
+        },
+        {
+          "id": "edit_shipping",
+          "label": "Edit Shipping",
+          "intent": "edit_shipping_address",
+          "risk": "low",
+          "requiresConfirmation": false,
+          "sideEffects": [],
+          "reversible": true,
+          "availableWhen": {
+            "status": [
+              "pending",
+              "confirmed"
+            ]
+          },
+          "confidence": 0.6,
+          "source": {
+            "file": "src/pages/orders/[id].tsx",
+            "component": "Button"
+          }
+        }
+      ],
+      "workflows": [],
+      "dynamicContent": {
+        "dataSource": "static",
+        "entityFields": [
+          "id",
+          "status",
+          "total",
+          "customer"
+        ],
+        "stateDependent": true,
+        "possibleStates": [
+          "confirmed",
+          "shipped",
+          "delivered",
+          "pending"
+        ],
+        "roleDependent": true,
+        "roles": [
+          "admin"
+        ],
+        "conditionalActions": {
+          "refund_order": {
+            "status": [
+              "confirmed",
+              "shipped",
+              "delivered"
+            ],
+            "role": [
+              "admin"
+            ]
+          },
+          "edit_shipping": {
+            "status": [
+              "pending",
+              "confirmed"
+            ]
+          }
+        }
+      }
+    },
+    "order-list": {
+      "id": "order-list",
+      "route": "/orders",
+      "type": "list",
+      "purpose": "Browse and triage orders",
+      "entity": "order",
+      "dynamic": false,
+      "sourceFile": "src/pages/orders/index.tsx",
+      "confidence": 0.65,
+      "actions": [
+        {
+          "id": "filter_orders",
+          "label": "Filter Orders",
+          "intent": "filter_orders",
+          "risk": "low",
+          "requiresConfirmation": false,
+          "sideEffects": [],
+          "reversible": true,
+          "confidence": 0.5,
+          "source": {
+            "file": "src/pages/orders/index.tsx",
+            "component": "Button"
+          }
+        },
+        {
+          "id": "export_orders",
+          "label": "Export Orders",
+          "intent": "export",
+          "risk": "low",
+          "requiresConfirmation": false,
+          "sideEffects": [],
+          "reversible": true,
+          "confidence": 0.5,
+          "source": {
+            "file": "src/pages/orders/index.tsx",
+            "component": "Button"
+          }
+        }
+      ],
+      "workflows": []
+    }
+  },
+  "workflowDetails": {},
+  "components": [
+    {
+      "id": "alertdialog",
+      "name": "AlertDialog",
+      "semanticRole": "confirmation-dialog",
+      "states": [
+        "open",
+        "closed"
+      ],
+      "importantProps": [
+        "open"
+      ],
+      "risk": "high",
+      "requiresConfirmation": true,
+      "intents": [
+        "confirm_action"
+      ],
+      "confidence": 0.95,
+      "source": {
+        "file": "src/components/ui/alert-dialog.tsx",
+        "exportName": "AlertDialog",
+        "package": "shadcn-ui"
+      }
+    },
+    {
+      "id": "button",
+      "name": "Button",
+      "semanticRole": "action-trigger",
+      "variants": [
+        {
+          "name": "variant",
+          "values": [
+            "default",
+            "secondary",
+            "destructive"
+          ]
+        },
+        {
+          "name": "size",
+          "values": [
+            "default",
+            "sm",
+            "lg"
+          ]
+        }
+      ],
+      "states": [
+        "active",
+        "disabled",
+        "destructive"
+      ],
+      "importantProps": [
+        "variant",
+        "size",
+        "asChild",
+        "disabled"
+      ],
+      "risk": "high",
+      "confidence": 0.95,
+      "source": {
+        "file": "src/components/ui/button.tsx",
+        "exportName": "Button",
+        "package": "shadcn-ui"
+      }
+    },
+    {
+      "id": "checkbox",
+      "name": "Checkbox",
+      "semanticRole": "boolean-input",
+      "states": [
+        "checked"
+      ],
+      "importantProps": [
+        "checked",
+        "type"
+      ],
+      "confidence": 0.95,
+      "source": {
+        "file": "src/components/ui/checkbox.tsx",
+        "exportName": "Checkbox",
+        "package": "shadcn-ui"
+      }
+    },
+    {
+      "id": "dialog",
+      "name": "Dialog",
+      "semanticRole": "modal-dialog",
+      "states": [
+        "open",
+        "closed"
+      ],
+      "importantProps": [
+        "open"
+      ],
+      "confidence": 0.95,
+      "source": {
+        "file": "src/components/ui/dialog.tsx",
+        "exportName": "Dialog",
+        "package": "shadcn-ui"
+      }
+    },
+    {
+      "id": "dropdownmenu",
+      "name": "DropdownMenu",
+      "semanticRole": "menu",
+      "states": [
+        "closed"
+      ],
+      "confidence": 0.95,
+      "source": {
+        "file": "src/components/ui/dropdown-menu.tsx",
+        "exportName": "DropdownMenu",
+        "package": "shadcn-ui"
+      }
+    },
+    {
+      "id": "input",
+      "name": "Input",
+      "semanticRole": "text-input",
+      "states": [
+        "disabled"
+      ],
+      "importantProps": [
+        "disabled",
+        "defaultValue",
+        "value"
+      ],
+      "confidence": 0.95,
+      "source": {
+        "file": "src/components/ui/input.tsx",
+        "exportName": "Input",
+        "package": "shadcn-ui"
+      }
+    },
+    {
+      "id": "select",
+      "name": "Select",
+      "semanticRole": "select-input",
+      "importantProps": [
+        "defaultValue",
+        "value"
+      ],
+      "confidence": 0.95,
+      "source": {
+        "file": "src/components/ui/select.tsx",
+        "exportName": "Select",
+        "package": "shadcn-ui"
+      }
+    },
+    {
+      "id": "sheet",
+      "name": "Sheet",
+      "semanticRole": "drawer",
+      "states": [
+        "open",
+        "closed"
+      ],
+      "importantProps": [
+        "open"
+      ],
+      "confidence": 0.95,
+      "source": {
+        "file": "src/components/ui/sheet.tsx",
+        "exportName": "Sheet",
+        "package": "shadcn-ui"
+      }
+    },
+    {
+      "id": "table",
+      "name": "Table",
+      "semanticRole": "data-table",
+      "confidence": 0.95,
+      "source": {
+        "file": "src/components/ui/table.tsx",
+        "exportName": "Table",
+        "package": "shadcn-ui"
+      }
+    },
+    {
+      "id": "tabs",
+      "name": "Tabs",
+      "semanticRole": "navigation-tabs",
+      "states": [
+        "active",
+        "inactive"
+      ],
+      "importantProps": [
+        "value"
+      ],
+      "confidence": 0.95,
+      "source": {
+        "file": "src/components/ui/tabs.tsx",
+        "exportName": "Tabs",
+        "package": "shadcn-ui"
+      }
+    }
+  ],
+  "metadata": {
+    "generatedFrom": "scan",
+    "scanWarnings": []
+  }
+}

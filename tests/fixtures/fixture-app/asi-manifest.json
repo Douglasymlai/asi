@@ -1,0 +1,816 @@
+{
+  "asi": "1.0",
+  "app": {
+    "name": "fixture-store-admin",
+    "framework": "next",
+    "domain": "e-commerce",
+    "generatedAt": "2026-03-19T11:42:23.826Z"
+  },
+  "pages": [
+    {
+      "id": "customer-list",
+      "route": "/customers",
+      "type": "list",
+      "purpose": "Browse and manage customers",
+      "entity": "customer"
+    },
+    {
+      "id": "order-detail",
+      "route": "/orders/:id",
+      "type": "detail",
+      "purpose": "View and manage a single order",
+      "entity": "order",
+      "dynamic": true
+    },
+    {
+      "id": "order-list",
+      "route": "/orders",
+      "type": "list",
+      "purpose": "Browse and search orders",
+      "entity": "order",
+      "dynamic": true
+    },
+    {
+      "id": "dashboard",
+      "route": "/",
+      "type": "dashboard",
+      "purpose": "Monitor fulfillment, revenue, and support queues"
+    },
+    {
+      "id": "product-list",
+      "route": "/products",
+      "type": "list",
+      "purpose": "Browse products and create new listings",
+      "entity": "product",
+      "dynamic": true
+    },
+    {
+      "id": "reports",
+      "route": "/reports",
+      "type": "dashboard",
+      "purpose": "Review operational reports and revenue performance",
+      "dynamic": true
+    },
+    {
+      "id": "settings",
+      "route": "/settings",
+      "type": "settings",
+      "purpose": "Configure agent-safe operational defaults"
+    }
+  ],
+  "pageDetails": {
+    "customer-list": {
+      "id": "customer-list",
+      "route": "/customers",
+      "type": "list",
+      "purpose": "Browse and manage customers",
+      "entity": "customer",
+      "dynamic": false,
+      "sourceFile": "src/app/customers/page.tsx",
+      "confidence": 0.6,
+      "actions": [
+        {
+          "id": "open_customer",
+          "label": "Open Customer",
+          "intent": "open_customer",
+          "risk": "low",
+          "requiresConfirmation": false,
+          "sideEffects": [],
+          "reversible": true,
+          "confidence": 0.9,
+          "source": {
+            "file": "src/app/customers/page.tsx",
+            "component": "Button"
+          }
+        }
+      ],
+      "workflows": []
+    },
+    "order-detail": {
+      "id": "order-detail",
+      "route": "/orders/:id",
+      "type": "detail",
+      "purpose": "View and manage a single order",
+      "entity": "order",
+      "dynamic": true,
+      "sourceFile": "src/app/orders/[id]/page.tsx",
+      "confidence": 0.85,
+      "actions": [
+        {
+          "id": "refund_order",
+          "label": "Refund",
+          "intent": "refund_order",
+          "risk": "high",
+          "requiresConfirmation": true,
+          "sideEffects": [
+            "financial",
+            "state_change"
+          ],
+          "reversible": false,
+          "availableWhen": {
+            "status": [
+              "confirmed",
+              "shipped",
+              "delivered"
+            ],
+            "role": [
+              "admin"
+            ]
+          },
+          "confidence": 1,
+          "source": {
+            "file": "src/app/orders/[id]/page.tsx",
+            "component": "Button"
+          }
+        },
+        {
+          "id": "cancel_order",
+          "label": "Cancel Order",
+          "intent": "cancel_order",
+          "risk": "high",
+          "requiresConfirmation": true,
+          "sideEffects": [
+            "financial",
+            "state_change",
+            "notification"
+          ],
+          "reversible": false,
+          "availableWhen": {
+            "status": [
+              "pending",
+              "confirmed"
+            ],
+            "role": [
+              "admin",
+              "support"
+            ]
+          },
+          "confidence": 1,
+          "source": {
+            "file": "src/app/orders/[id]/page.tsx",
+            "component": "Button"
+          }
+        },
+        {
+          "id": "edit_shipping",
+          "label": "Edit Shipping",
+          "intent": "edit_shipping_address",
+          "risk": "low",
+          "requiresConfirmation": false,
+          "sideEffects": [
+            "state_change"
+          ],
+          "reversible": true,
+          "availableWhen": {
+            "status": [
+              "pending",
+              "confirmed"
+            ],
+            "role": [
+              "admin",
+              "support"
+            ]
+          },
+          "confidence": 1,
+          "source": {
+            "file": "src/app/orders/[id]/page.tsx",
+            "component": "Button"
+          }
+        },
+        {
+          "id": "archive_order",
+          "label": "Archive Order",
+          "intent": "archive_order",
+          "risk": "high",
+          "requiresConfirmation": true,
+          "sideEffects": [
+            "state_change"
+          ],
+          "reversible": false,
+          "availableWhen": {
+            "status": [
+              "delivered",
+              "refunded",
+              "cancelled"
+            ],
+            "role": [
+              "admin"
+            ]
+          },
+          "confidence": 1,
+          "source": {
+            "file": "src/app/orders/[id]/page.tsx",
+            "component": "Button"
+          }
+        }
+      ],
+      "workflows": [
+        {
+          "id": "cancel-order",
+          "goal": "Cancel an order before fulfillment",
+          "trigger": "cancel_order",
+          "stepsCount": 2,
+          "source": "authored"
+        },
+        {
+          "id": "edit-shipping-address",
+          "goal": "Update the shipping address for an eligible order",
+          "trigger": "edit_shipping_address",
+          "stepsCount": 3,
+          "source": "authored"
+        },
+        {
+          "id": "refund-order",
+          "goal": "Process a refund for an order",
+          "trigger": "refund_order",
+          "stepsCount": 4,
+          "source": "authored"
+        }
+      ],
+      "dynamicContent": {
+        "dataSource": "api",
+        "entityFields": [
+          "id",
+          "status",
+          "total",
+          "customer",
+          "items",
+          "created_at"
+        ],
+        "stateDependent": true,
+        "possibleStates": [
+          "pending",
+          "confirmed",
+          "shipped",
+          "delivered",
+          "cancelled",
+          "refunded"
+        ],
+        "roleDependent": true,
+        "roles": [
+          "admin",
+          "support",
+          "viewer"
+        ],
+        "conditionalActions": {
+          "refund_order": {
+            "status": [
+              "confirmed",
+              "shipped",
+              "delivered"
+            ],
+            "role": [
+              "admin"
+            ]
+          },
+          "cancel_order": {
+            "status": [
+              "pending",
+              "confirmed"
+            ],
+            "role": [
+              "admin",
+              "support"
+            ]
+          },
+          "edit_shipping": {
+            "status": [
+              "pending",
+              "confirmed"
+            ],
+            "role": [
+              "admin",
+              "support"
+            ]
+          },
+          "archive_order": {
+            "status": [
+              "delivered",
+              "refunded",
+              "cancelled"
+            ],
+            "role": [
+              "admin"
+            ]
+          }
+        }
+      }
+    },
+    "order-list": {
+      "id": "order-list",
+      "route": "/orders",
+      "type": "list",
+      "purpose": "Browse and search orders",
+      "entity": "order",
+      "dynamic": true,
+      "sourceFile": "src/app/orders/page.tsx",
+      "confidence": 0.75,
+      "actions": [
+        {
+          "id": "filter_orders",
+          "label": "Filter Orders",
+          "intent": "filter_orders",
+          "risk": "low",
+          "requiresConfirmation": false,
+          "sideEffects": [],
+          "reversible": true,
+          "confidence": 0.9,
+          "source": {
+            "file": "src/app/orders/page.tsx",
+            "component": "Button"
+          }
+        },
+        {
+          "id": "export_orders",
+          "label": "Export Orders",
+          "intent": "export_orders",
+          "risk": "medium",
+          "requiresConfirmation": false,
+          "sideEffects": [
+            "export"
+          ],
+          "reversible": true,
+          "confidence": 0.9,
+          "source": {
+            "file": "src/app/orders/page.tsx",
+            "component": "Button"
+          }
+        }
+      ],
+      "workflows": [],
+      "dynamicContent": {
+        "dataSource": "api",
+        "entityFields": [
+          "id",
+          "status",
+          "total",
+          "customer",
+          "createdAt"
+        ],
+        "stateDependent": true,
+        "possibleStates": [
+          "pending",
+          "confirmed",
+          "shipped",
+          "delivered",
+          "cancelled",
+          "refunded"
+        ],
+        "roleDependent": true,
+        "roles": [
+          "admin",
+          "support",
+          "viewer"
+        ]
+      }
+    },
+    "dashboard": {
+      "id": "dashboard",
+      "route": "/",
+      "type": "dashboard",
+      "purpose": "Monitor fulfillment, revenue, and support queues",
+      "dynamic": false,
+      "sourceFile": "src/app/page.tsx",
+      "confidence": 0.6,
+      "actions": [
+        {
+          "id": "review_refunds",
+          "label": "Review Refund Queue",
+          "intent": "review_refunds",
+          "risk": "low",
+          "requiresConfirmation": false,
+          "sideEffects": [],
+          "reversible": true,
+          "confidence": 0.9,
+          "source": {
+            "file": "src/app/page.tsx",
+            "component": "Button"
+          }
+        }
+      ],
+      "workflows": []
+    },
+    "product-list": {
+      "id": "product-list",
+      "route": "/products",
+      "type": "list",
+      "purpose": "Browse products and create new listings",
+      "entity": "product",
+      "dynamic": true,
+      "sourceFile": "src/app/products/page.tsx",
+      "confidence": 0.7,
+      "actions": [
+        {
+          "id": "create_product",
+          "label": "Create Product",
+          "intent": "create_product",
+          "risk": "medium",
+          "requiresConfirmation": false,
+          "sideEffects": [
+            "state_change"
+          ],
+          "reversible": true,
+          "availableWhen": {
+            "role": [
+              "admin",
+              "merchandiser"
+            ]
+          },
+          "confidence": 1,
+          "source": {
+            "file": "src/app/products/page.tsx",
+            "component": "Button"
+          }
+        }
+      ],
+      "workflows": [
+        {
+          "id": "create-product",
+          "goal": "Create a new product listing",
+          "trigger": "create_product",
+          "stepsCount": 3,
+          "source": "authored"
+        }
+      ],
+      "dynamicContent": {
+        "dataSource": "unknown",
+        "entityFields": [
+          "id",
+          "title",
+          "inventory",
+          "status",
+          "price"
+        ],
+        "stateDependent": true,
+        "possibleStates": [
+          "draft",
+          "active",
+          "archived"
+        ],
+        "roleDependent": true,
+        "roles": [
+          "admin",
+          "merchandiser",
+          "viewer"
+        ],
+        "conditionalActions": {
+          "create_product": {
+            "role": [
+              "admin",
+              "merchandiser"
+            ]
+          }
+        }
+      }
+    },
+    "reports": {
+      "id": "reports",
+      "route": "/reports",
+      "type": "dashboard",
+      "purpose": "Review operational reports and revenue performance",
+      "dynamic": true,
+      "sourceFile": "src/app/reports/page.tsx",
+      "confidence": 0.7,
+      "actions": [
+        {
+          "id": "export_revenue_report",
+          "label": "Export Revenue Report",
+          "intent": "export_revenue_report",
+          "risk": "low",
+          "requiresConfirmation": false,
+          "sideEffects": [
+            "export"
+          ],
+          "reversible": true,
+          "confidence": 0.9,
+          "source": {
+            "file": "src/app/reports/page.tsx",
+            "component": "Button"
+          }
+        }
+      ],
+      "workflows": [],
+      "dynamicContent": {
+        "dataSource": "api",
+        "entityFields": [],
+        "stateDependent": false,
+        "notes": [
+          "entity_fields_unknown"
+        ]
+      }
+    },
+    "settings": {
+      "id": "settings",
+      "route": "/settings",
+      "type": "settings",
+      "purpose": "Configure agent-safe operational defaults",
+      "dynamic": false,
+      "sourceFile": "src/app/settings/page.tsx",
+      "confidence": 0.6,
+      "actions": [
+        {
+          "id": "save_settings",
+          "label": "Save Settings",
+          "intent": "save_settings",
+          "risk": "medium",
+          "requiresConfirmation": false,
+          "sideEffects": [
+            "state_change"
+          ],
+          "reversible": true,
+          "confidence": 0.9,
+          "source": {
+            "file": "src/app/settings/page.tsx",
+            "component": "Button"
+          }
+        }
+      ],
+      "workflows": []
+    }
+  },
+  "workflowDetails": {
+    "cancel-order": {
+      "id": "cancel-order",
+      "pageId": "order-detail",
+      "goal": "Cancel an order before fulfillment",
+      "trigger": "cancel_order",
+      "availableWhen": {
+        "status": [
+          "pending",
+          "confirmed"
+        ],
+        "role": [
+          "admin",
+          "support"
+        ]
+      },
+      "steps": [
+        {
+          "id": "open_cancel_modal",
+          "action": "click",
+          "target": "cancel_order",
+          "description": "Click \"Cancel Order\" button",
+          "next": "confirm_cancel"
+        },
+        {
+          "id": "confirm_cancel",
+          "action": "click",
+          "target": "confirm_cancel",
+          "description": "Click \"Confirm Cancel\"",
+          "next": null
+        }
+      ],
+      "completion": {
+        "signal": "toast_success",
+        "message_contains": "cancel",
+        "redirects_to": "/orders/:id",
+        "expectedStateChange": {
+          "status": "cancelled"
+        }
+      },
+      "reporting": {
+        "on_success": {
+          "workflow": "cancel-order",
+          "status": "completed",
+          "entity": "order",
+          "stateTransition": "status -> cancelled"
+        },
+        "on_failure": {
+          "workflow": "cancel-order",
+          "status": "failed",
+          "failedAtStep": "<step_id>",
+          "reason": "<agent_description>"
+        }
+      },
+      "metadata": {
+        "risk": "high",
+        "sideEffects": [
+          "financial",
+          "state_change",
+          "notification"
+        ],
+        "reversible": false,
+        "sourceFile": "workflows/cancel-order.asi.md"
+      }
+    },
+    "create-product": {
+      "id": "create-product",
+      "pageId": "product-list",
+      "goal": "Create a new product listing",
+      "trigger": "create_product",
+      "availableWhen": {
+        "role": [
+          "admin",
+          "merchandiser"
+        ]
+      },
+      "steps": [
+        {
+          "id": "open_product_form",
+          "action": "click",
+          "target": "create_product",
+          "description": "Click \"Create Product\" button",
+          "next": "fill_product_fields"
+        },
+        {
+          "id": "fill_product_fields",
+          "action": "input",
+          "target": "fill_product_fields",
+          "description": "Enter product details",
+          "next": "submit_product"
+        },
+        {
+          "id": "submit_product",
+          "action": "click",
+          "target": "save_product",
+          "description": "Click \"Save Product\"",
+          "next": null
+        }
+      ],
+      "completion": {
+        "signal": "toast_success",
+        "message_contains": "product",
+        "redirects_to": "/products",
+        "expectedStateChange": {
+          "status": "active"
+        }
+      },
+      "reporting": {
+        "on_success": {
+          "workflow": "create-product",
+          "status": "completed",
+          "entity": "product",
+          "stateTransition": "status -> active"
+        },
+        "on_failure": {
+          "workflow": "create-product",
+          "status": "failed",
+          "failedAtStep": "<step_id>",
+          "reason": "<agent_description>"
+        }
+      },
+      "metadata": {
+        "risk": "medium",
+        "sideEffects": [
+          "state_change"
+        ],
+        "reversible": true,
+        "sourceFile": "workflows/create-product.asi.md"
+      }
+    },
+    "edit-shipping-address": {
+      "id": "edit-shipping-address",
+      "pageId": "order-detail",
+      "goal": "Update the shipping address for an eligible order",
+      "trigger": "edit_shipping_address",
+      "availableWhen": {
+        "status": [
+          "pending",
+          "confirmed"
+        ],
+        "role": [
+          "admin",
+          "support"
+        ]
+      },
+      "steps": [
+        {
+          "id": "open_shipping_editor",
+          "action": "click",
+          "target": "edit_shipping",
+          "description": "Click \"Edit Shipping\" button",
+          "next": "update_shipping_fields"
+        },
+        {
+          "id": "update_shipping_fields",
+          "action": "input",
+          "target": "update_shipping_fields",
+          "description": "Enter the new shipping address",
+          "next": "save_shipping_changes"
+        },
+        {
+          "id": "save_shipping_changes",
+          "action": "click",
+          "target": "save_shipping",
+          "description": "Click \"Save Shipping\"",
+          "next": null
+        }
+      ],
+      "completion": {
+        "signal": "toast_success",
+        "message_contains": "shipping",
+        "redirects_to": "/orders/:id",
+        "expectedStateChange": {
+          "shipping_address": "updated"
+        }
+      },
+      "reporting": {
+        "on_success": {
+          "workflow": "edit-shipping-address",
+          "status": "completed",
+          "entity": "order",
+          "stateTransition": "shipping_address -> updated"
+        },
+        "on_failure": {
+          "workflow": "edit-shipping-address",
+          "status": "failed",
+          "failedAtStep": "<step_id>",
+          "reason": "<agent_description>"
+        }
+      },
+      "metadata": {
+        "risk": "low",
+        "sideEffects": [
+          "state_change"
+        ],
+        "reversible": true,
+        "sourceFile": "workflows/edit-shipping.asi.md"
+      }
+    },
+    "refund-order": {
+      "id": "refund-order",
+      "pageId": "order-detail",
+      "goal": "Process a refund for an order",
+      "trigger": "refund_order",
+      "availableWhen": {
+        "status": [
+          "confirmed",
+          "shipped",
+          "delivered"
+        ],
+        "role": [
+          "admin"
+        ]
+      },
+      "steps": [
+        {
+          "id": "open_refund_modal",
+          "action": "click",
+          "target": "refund",
+          "description": "Click \"Refund\" button",
+          "next": "select_refund_amount"
+        },
+        {
+          "id": "select_refund_amount",
+          "action": "input",
+          "target": "select_refund_amount",
+          "description": "Enter refund amount",
+          "next": "confirm_refund",
+          "optional_next": [
+            "add_refund_note"
+          ]
+        },
+        {
+          "id": "add_refund_note",
+          "action": "input",
+          "target": "add_refund_note",
+          "description": "Add a note for the refund reason",
+          "required": false,
+          "next": "confirm_refund"
+        },
+        {
+          "id": "confirm_refund",
+          "action": "click",
+          "target": "confirm_refund",
+          "description": "Click \"Confirm Refund\"",
+          "next": null
+        }
+      ],
+      "completion": {
+        "signal": "toast_success",
+        "message_contains": "refund",
+        "redirects_to": "/orders/:id",
+        "expectedStateChange": {
+          "status": "refunded"
+        }
+      },
+      "reporting": {
+        "on_success": {
+          "workflow": "refund-order",
+          "status": "completed",
+          "entity": "order",
+          "stateTransition": "status -> refunded"
+        },
+        "on_failure": {
+          "workflow": "refund-order",
+          "status": "failed",
+          "failedAtStep": "<step_id>",
+          "reason": "<agent_description>"
+        }
+      },
+      "metadata": {
+        "risk": "high",
+        "sideEffects": [
+          "financial",
+          "state_change"
+        ],
+        "reversible": false,
+        "sourceFile": "workflows/refund-order.asi.md"
+      }
+    }
+  },
+  "metadata": {
+    "generatedFrom": "compile",
+    "scanWarnings": []
+  }
+}

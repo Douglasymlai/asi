@@ -1,0 +1,34 @@
+{
+  "framework": "next",
+  "surface": "web",
+  "router": "next-app",
+  "srcDir": "src",
+  "routesDir": "src/app",
+  "workflowsDir": "workflows",
+  "outputFile": "asi-manifest.json",
+  "cacheDir": ".asi",
+  "componentDirs": ["src/components/ui"],
+  "designSystem": {
+    "buttonComponent": "Button",
+    "destructiveVariant": "destructive",
+    "modalComponent": "Dialog"
+  },
+  "app": {
+    "name": "fixture-store-admin",
+    "domain": "e-commerce"
+  },
+  "overrides": {
+    "pages": {
+      "/reports": {
+        "purpose": "Review operational reports and revenue performance",
+        "type": "dashboard"
+      }
+    },
+    "actions": {
+      "archive_order": {
+        "requiresConfirmation": true,
+        "reversible": false
+      }
+    }
+  }
+}

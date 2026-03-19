@@ -1,0 +1,8 @@
+{
+  "framework": "nextjs",
+  "srcDir": "src",
+  "routesDir": 123,
+  "workflowsDir": "workflows",
+  "outputFile": "asi-manifest.json",
+  "designSystem": "wrong"
+}

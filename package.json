@@ -1,0 +1,49 @@
+{
+  "name": "agent-semantic-interface",
+  "version": "0.1.0",
+  "description": "Semantic layer tooling for React-built webapps, with Next.js and generic React adapters.",
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "bin": {
+    "asi": "dist/src/cli/index.js"
+  },
+  "files": [
+    "dist/src",
+    "dist/packages",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist",
+    "test": "npm run build && node --test dist/tests",
+    "pack:dry-run": "npm pack --dry-run --cache .npm-cache",
+    "release:check": "npm test && npm run pack:dry-run",
+    "prepublishOnly": "npm run release:check",
+    "scan:fixture": "npm run build && node dist/src/cli/index.js scan --project tests/fixtures/fixture-app",
+    "compile:fixture": "npm run build && node dist/src/cli/index.js compile --project tests/fixtures/fixture-app",
+    "validate:fixture": "npm run build && node dist/src/cli/index.js validate --project tests/fixtures/fixture-app",
+    "diff:fixture": "npm run build && node dist/src/cli/index.js diff --left tests/fixtures/fixture-app/asi-manifest.json --right tests/fixtures/fixture-app/asi-manifest.json",
+    "benchmark:fixture": "npm run build && node dist/src/benchmark/cli.js --tasks tests/fixtures/fixture-app/data/benchmark-tasks.json --baseline tests/fixtures/specs/baseline-results.json --enhanced tests/fixtures/specs/enhanced-results.json"
+  },
+  "keywords": [
+    "agents",
+    "cli",
+    "manifest",
+    "react",
+    "shadcn",
+    "semantics"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "typescript": "^5.8.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.30"
+  }
+}
