@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { runBenchmark, generateBenchmarkReport, AgentAdapter, AgentCondition } from "../src/benchmark/harness.js";
 import { scanProject } from "../src/scanner/index.js";
 import { mergeAuthoredWorkflows } from "../src/manifest/merge.js";
-import { AgentRunResult, AsiManifest, BenchmarkTask } from "../src/specs/contracts.js";
+import { AgentRunResult, SiaManifest, BenchmarkTask } from "../src/specs/contracts.js";
 import { copyFixtureApp } from "./helpers.js";
 
 function createMockAdapter(): AgentAdapter {

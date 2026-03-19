@@ -1,13 +1,13 @@
 {
-  "name": "agent-semantic-interface",
+  "name": "sia",
   "version": "0.1.0",
-  "description": "Semantic layer tooling for React-built webapps, with Next.js and generic React adapters.",
+  "description": "Semantic Interface for Applications. Every production application should expose a semantic manifest that describes what it can do, how it behaves, and what is safe—understandable to both humans and agents.",
   "type": "module",
   "workspaces": [
     "packages/*"
   ],
   "bin": {
-    "asi": "dist/src/cli/index.js"
+    "sia": "dist/src/cli/index.js"
   },
   "files": [
     "dist/src",
@@ -25,7 +25,7 @@
     "scan:fixture": "npm run build && node dist/src/cli/index.js scan --project tests/fixtures/fixture-app",
     "compile:fixture": "npm run build && node dist/src/cli/index.js compile --project tests/fixtures/fixture-app",
     "validate:fixture": "npm run build && node dist/src/cli/index.js validate --project tests/fixtures/fixture-app",
-    "diff:fixture": "npm run build && node dist/src/cli/index.js diff --left tests/fixtures/fixture-app/asi-manifest.json --right tests/fixtures/fixture-app/asi-manifest.json",
+    "diff:fixture": "npm run build && node dist/src/cli/index.js diff --left tests/fixtures/fixture-app/sia-manifest.json --right tests/fixtures/fixture-app/sia-manifest.json",
     "benchmark:fixture": "npm run build && node dist/src/benchmark/cli.js --tasks tests/fixtures/fixture-app/data/benchmark-tasks.json --baseline tests/fixtures/specs/baseline-results.json --enhanced tests/fixtures/specs/enhanced-results.json"
   },
   "keywords": [

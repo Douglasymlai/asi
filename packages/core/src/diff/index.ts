@@ -1,11 +1,11 @@
-import { AsiManifest } from "../specs/contracts.js";
+import { SiaManifest } from "../specs/contracts.js";
 
 export interface ManifestDiff {
   lines: string[];
   breaking: boolean;
 }
 
-export function diffManifests(left: AsiManifest, right: AsiManifest): ManifestDiff {
+export function diffManifests(left: SiaManifest, right: SiaManifest): ManifestDiff {
   const lines: string[] = [];
   let breaking = false;
 

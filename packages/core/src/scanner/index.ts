@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { ASI_VERSION, AsiManifest } from "../specs/contracts.js";
+import { SIA_VERSION, SiaManifest } from "../specs/contracts.js";
 import { assertValidManifest } from "../specs/validation.js";
 import { writeJsonFile } from "../utils/fs.js";
 import { FrameworkAdapter } from "../framework/contracts.js";
@@ -12,7 +12,7 @@ export function getScanCachePath(projectRoot: string, cacheDir: string): string 
   return path.join(projectRoot, cacheDir, "scan-manifest.json");
 }
 
-export function scanProjectWithAdapter(projectRoot: string, config: AsiConfig, adapter: FrameworkAdapter): AsiManifest {
+export function scanProjectWithAdapter(projectRoot: string, config: AsiConfig, adapter: FrameworkAdapter): SiaManifest {
   const discoveredPages = adapter.discoverPages(projectRoot, config);
   const warnings: string[] = [];
   if (discoveredPages.length === 0) {
@@ -36,8 +36,8 @@ export function scanProjectWithAdapter(projectRoot: string, config: AsiConfig, a
   const components = extractComponentCatalog(projectRoot, config);
 
   const packageName = getPackageName(projectRoot);
-  const manifest: AsiManifest = {
-    asi: ASI_VERSION,
+  const manifest: SiaManifest = {
+    sia: SIA_VERSION,
     app: {
       name: config.app?.name ?? packageName ?? path.basename(projectRoot),
       framework: config.framework,
@@ -56,7 +56,7 @@ export function scanProjectWithAdapter(projectRoot: string, config: AsiConfig, a
   return assertValidManifest(manifest);
 }
 
-export function scanAndWriteWithAdapter(projectRoot: string, config: AsiConfig, adapter: FrameworkAdapter): AsiManifest {
+export function scanAndWriteWithAdapter(projectRoot: string, config: AsiConfig, adapter: FrameworkAdapter): SiaManifest {
   const manifest = scanProjectWithAdapter(projectRoot, config, adapter);
   const scanCachePath = getScanCachePath(projectRoot, config.cacheDir);
   writeJsonFile(scanCachePath, manifest);

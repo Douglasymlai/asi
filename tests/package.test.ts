@@ -13,13 +13,13 @@ function createTempCache(root: string): string {
 }
 
 test("package tarball includes release assets and installed CLI works", () => {
-  const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "asi-package-"));
+  const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "sia-package-"));
   const cacheDir = createTempCache(tempRoot);
   const installRoot = path.join(tempRoot, "consumer");
   fs.mkdirSync(installRoot, { recursive: true });
   fs.writeFileSync(
     path.join(installRoot, "package.json"),
-    JSON.stringify({ name: "asi-consumer", private: true }, null, 2)
+    JSON.stringify({ name: "sia-consumer", private: true }, null, 2)
   );
 
   const tarballName = execFileSync(
@@ -50,7 +50,7 @@ test("package tarball includes release assets and installed CLI works", () => {
     stdio: "pipe"
   });
 
-  const binPath = path.join(installRoot, "node_modules", ".bin", "asi");
+  const binPath = path.join(installRoot, "node_modules", ".bin", "sia");
   const projectRoot = path.join(installRoot, "sample-project");
   fs.mkdirSync(projectRoot, { recursive: true });
 
@@ -59,5 +59,5 @@ test("package tarball includes release assets and installed CLI works", () => {
     stdio: "pipe"
   });
 
-  assert.ok(fs.existsSync(path.join(projectRoot, "asi.config.json")));
+  assert.ok(fs.existsSync(path.join(projectRoot, "sia.config.json")));
 });

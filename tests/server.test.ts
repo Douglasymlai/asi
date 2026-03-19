@@ -69,7 +69,7 @@ test("serve: progressive disclosure endpoints", async (t) => {
     const root = await fetch(`http://localhost:${port}/`);
     assert.equal(root.status, 200);
     const rootBody = root.body as Record<string, unknown>;
-    assert.equal(rootBody.asi, "1.0");
+    assert.equal(rootBody.sia, "1.0");
     assert.ok(Array.isArray(rootBody.pages));
     assert.equal(rootBody.pageDetails, undefined, "Root should not include pageDetails");
 
@@ -131,7 +131,7 @@ test("serve: agent report submission", async (t) => {
 
   try {
     const validReport = {
-      asi_report: "1.0",
+      sia_report: "1.0",
       timestamp: "2025-03-19T12:05:00Z",
       agent: "test-agent/1.0",
       app: "fixture-store-admin",

@@ -34,7 +34,7 @@ function routeFromReactPageFile(filePath: string, routesDir: string): string {
 }
 
 function extractExplicitRoute(source: string): string | undefined {
-  const routeConst = source.match(/export\s+const\s+asiRoute\s*=\s*["']([^"']+)["']/);
+  const routeConst = source.match(/export\s+const\s+siaRoute\s*=\s*["']([^"']+)["']/);
   if (routeConst?.[1]) {
     return normalizeRoute(routeConst[1]);
   }

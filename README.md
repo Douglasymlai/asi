@@ -1,12 +1,12 @@
-# Agent Semantic Interface (ASI)
+# SIA — Semantic Interface for Agents
 
-> Semantic layer tooling for React-built webapps, with Next.js and generic React adapters.
+> Every production application should expose a semantic manifest that describes what it can do, how it behaves, and what is safe—understandable to both humans and agents.
 
-ASI generates a machine-readable manifest that describes what a React app means, not just what it renders. It scans pages, actions, dynamic behavior, authored workflows, and optional reusable component semantics so future AI agents can understand how to operate the product safely.
+SIA generates a machine-readable manifest that describes what a React app means, not just what it renders. It scans pages, actions, dynamic behavior, authored workflows, and optional reusable component semantics so future AI agents can understand how to operate the product safely.
 
 ## Positioning
 
-ASI is for teams building React-based products that want to expose semantic intent above raw DOM interaction.
+SIA is for teams building React-based products that want to expose semantic intent above raw DOM interaction.
 
 Current first-class support:
 
@@ -27,7 +27,7 @@ The repo is now split as an npm-workspaces monorepo:
 - `packages/core`: manifest schema, validation, workflow DSL, diffing, reporting, shared scanners, benchmarks
 - `packages/framework-next`: Next.js App Router page discovery
 - `packages/framework-react`: generic React web page discovery and router-aware scanning
-- root package: single `asi` CLI and compatibility entrypoints
+- root package: single `sia` CLI and compatibility entrypoints
 
 ## Architecture
 
@@ -102,7 +102,7 @@ The entry point. Gives the agent a map of the entire application.
 
 ```json
 {
-  "asi": "1.0",
+  "sia": "1.0",
   "app": {
     "name": "my-store-admin",
     "framework": "next.js",
@@ -278,46 +278,46 @@ npm test
 When published:
 
 ```bash
-npm install -D agent-semantic-interface
+npm install -D sia
 ```
 
 ## Quick Start
 
-Initialize ASI in a project:
+Initialize SIA in a project:
 
 ```bash
-npx asi init
+npx sia init
 ```
 
 You can force the scaffolded adapter:
 
 ```bash
-npx asi init --framework next
-npx asi init --framework react
+npx sia init --framework next
+npx sia init --framework react
 ```
 
 Then scan and validate:
 
 ```bash
-npx asi scan
-npx asi validate
+npx sia scan
+npx sia validate
 ```
 
-Add authored workflows in `workflows/*.asi.md`, then merge them:
+Add authored workflows in `workflows/*.sia.md`, then merge them:
 
 ```bash
-npx asi compile
+npx sia compile
 ```
 
 Serve the manifest for local agent development:
 
 ```bash
-npx asi serve --port 4380
+npx sia serve --port 4380
 ```
 
 ## Config
 
-ASI now supports adapter-aware configuration:
+SIA supports adapter-aware configuration:
 
 ```json
 {
@@ -341,7 +341,7 @@ Key fields:
 
 ## shadcn/ui Component Catalog
 
-The first component benchmark focuses on shadcn/ui-style primitives. ASI can add an optional `components` section that captures:
+The first component benchmark focuses on shadcn/ui-style primitives. SIA can add an optional `components` section that captures:
 
 - semantic role
 - variants and states
@@ -363,16 +363,16 @@ Current high-signal component coverage in the fixture and tests includes:
 
 ## Manifest Diffing
 
-`asi diff` compares two manifests and reports changes across pages, workflows, and components:
+`sia diff` compares two manifests and reports changes across pages, workflows, and components:
 
 ```bash
-npx asi diff --left old-manifest.json --right new-manifest.json
+npx sia diff --left old-manifest.json --right new-manifest.json
 ```
 
 Use `--ci` mode in pipelines to fail on breaking changes:
 
 ```bash
-npx asi diff --left old.json --right new.json --ci --max-changes 10
+npx sia diff --left old.json --right new.json --ci --max-changes 10
 ```
 
 ## Verification
@@ -391,8 +391,8 @@ The test suite covers:
 
 ### Agent Benchmarking & Live Testing
 
-- [ ] Run ASI-guided agents against existing web-automation benchmarks (WebArena, Mind2Web) and measure task completion lift vs. unguided baseline
-- [ ] Browser-use integration — pair ASI manifests with browser-use capable agents, run end-to-end workflows against real apps, and measure success rate / wrong-action rate / risky-error rate
+- [ ] Run SIA-guided agents against existing web-automation benchmarks (WebArena, Mind2Web) and measure task completion lift vs. unguided baseline
+- [ ] Browser-use integration — pair SIA manifests with browser-use capable agents, run end-to-end workflows against real apps, and measure success rate / wrong-action rate / risky-error rate
 - [ ] Ablation harness improvements — automate per-layer ablation (pages only → pages + workflows → full manifest + components) to quantify each layer's contribution
 - [ ] Golden-run recording — capture successful agent runs as replayable fixtures for regression testing
 

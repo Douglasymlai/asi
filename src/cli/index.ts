@@ -4,7 +4,7 @@ import path from "node:path";
 import { createDefaultConfig, loadConfig } from "../config/index.js";
 import { diffManifests } from "../diff/index.js";
 import { mergeAuthoredWorkflows } from "../manifest/merge.js";
-import { AsiConfig, AsiFramework, AsiManifest, AgentReport } from "../specs/contracts.js";
+import { AsiConfig, AsiFramework, SiaManifest, AgentReport } from "../specs/contracts.js";
 import { validateManifest, validateReport, formatIssues } from "../specs/validation.js";
 import { readJsonFile, writeJsonFile, pathExists, ensureDir } from "../utils/fs.js";
 import { scanAndWrite, scanProject, getScanCachePath } from "../scanner/index.js";
@@ -47,8 +47,8 @@ function print(value: string): void {
   process.stdout.write(`${value}\n`);
 }
 
-function readManifest(filePath: string): AsiManifest {
-  return readJsonFile<AsiManifest>(filePath);
+function readManifest(filePath: string): SiaManifest {
+  return readJsonFile<SiaManifest>(filePath);
 }
 
 function inferFramework(projectRoot: string, options: Map<string, string>): AsiFramework {
@@ -177,7 +177,7 @@ function runPropose(projectRoot: string): void {
   const scanPath = getScanCachePath(projectRoot, config.cacheDir);
   const nextManifest = scanProject(projectRoot);
   if (!pathExists(scanPath)) {
-    print("No previous scan found. `asi scan` will create the initial manifest.");
+    print("No previous scan found. `sia scan` will create the initial manifest.");
     print(JSON.stringify(nextManifest.pages, null, 2));
     return;
   }
@@ -189,7 +189,7 @@ function runPropose(projectRoot: string): void {
 async function runServe(projectRoot: string, options: Map<string, string>): Promise<void> {
   const manifestPath = latestManifestPath(projectRoot);
   if (!pathExists(manifestPath)) {
-    throw new Error("No manifest found. Run `asi scan` or `asi compile` first.");
+    throw new Error("No manifest found. Run `sia scan` or `sia compile` first.");
   }
   const manifest = readManifest(manifestPath);
   const port = parseInt(options.get("port") ?? "4380", 10);
@@ -204,7 +204,7 @@ async function runServe(projectRoot: string, options: Map<string, string>): Prom
     }
   });
 
-  print(`ASI manifest server running at http://localhost:${port}`);
+  print(`SIA manifest server running at http://localhost:${port}`);
   print(`  GET  /              Level 0 — App overview + page summaries`);
   print(`  GET  /pages         Level 0 — Page list`);
   print(`  GET  /pages/:id     Level 1 — Page detail`);
@@ -226,17 +226,17 @@ async function runServe(projectRoot: string, options: Map<string, string>): Prom
 function runHelp(): void {
   print(
     [
-      "ASI CLI",
+      "SIA CLI",
       "",
       "Commands:",
-      "  asi init [--project <dir>] [--framework next|react] [--surface web|desktop|mobile]",
-      "  asi scan [--project <dir>]",
-      "  asi propose [--project <dir>]",
-      "  asi compile [--project <dir>]",
-      "  asi validate [--project <dir>] [--file <manifest.json>] [--report <report.json>]",
-      "  asi export [--project <dir>] [--out <manifest.json>]",
-      "  asi diff --left <manifest.json> --right <manifest.json> [--ci] [--max-changes <n>]",
-      "  asi serve [--project <dir>] [--port <port>]"
+      "  sia init [--project <dir>] [--framework next|react] [--surface web|desktop|mobile]",
+      "  sia scan [--project <dir>]",
+      "  sia propose [--project <dir>]",
+      "  sia compile [--project <dir>]",
+      "  sia validate [--project <dir>] [--file <manifest.json>] [--report <report.json>]",
+      "  sia export [--project <dir>] [--out <manifest.json>]",
+      "  sia diff --left <manifest.json> --right <manifest.json> [--ci] [--max-changes <n>]",
+      "  sia serve [--project <dir>] [--port <port>]"
     ].join("\n")
   );
 }

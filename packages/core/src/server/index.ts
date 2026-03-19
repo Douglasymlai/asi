@@ -1,9 +1,9 @@
 import http from "node:http";
-import { AsiManifest, AgentReport, REPORT_VERSION } from "../specs/contracts.js";
+import { SiaManifest, AgentReport, REPORT_VERSION } from "../specs/contracts.js";
 import { validateReport } from "../specs/validation.js";
 
 export interface ServeOptions {
-  manifest: AsiManifest;
+  manifest: SiaManifest;
   port: number;
   onReport?: (report: AgentReport) => void;
 }
@@ -44,7 +44,7 @@ export function createManifestServer(options: ServeOptions): http.Server {
     // Level 0 — App root: page summaries only
     if (pathname === "/" || pathname === "/manifest") {
       json(res, 200, {
-        asi: manifest.asi,
+        sia: manifest.sia,
         app: manifest.app,
         pages: manifest.pages,
         metadata: manifest.metadata

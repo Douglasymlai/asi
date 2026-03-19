@@ -3,6 +3,6 @@
   "srcDir": "src",
   "routesDir": 123,
   "workflowsDir": "workflows",
-  "outputFile": "asi-manifest.json",
+  "outputFile": "sia-manifest.json",
   "designSystem": "wrong"
 }

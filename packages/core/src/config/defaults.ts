@@ -8,8 +8,8 @@ export const DEFAULT_CONFIG: AsiConfig = {
   srcDir: "src",
   routesDir: "src/app",
   workflowsDir: "workflows",
-  outputFile: "asi-manifest.json",
-  cacheDir: ".asi",
+  outputFile: "sia-manifest.json",
+  cacheDir: ".sia",
   componentDirs: ["src/components/ui"],
   designSystem: {
     buttonComponent: "Button",
@@ -23,5 +23,5 @@ export const DEFAULT_CONFIG: AsiConfig = {
 };
 
 export function getConfigPath(projectRoot: string): string {
-  return path.join(projectRoot, "asi.config.json");
+  return path.join(projectRoot, "sia.config.json");
 }

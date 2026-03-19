@@ -1,4 +1,4 @@
-export const ASI_VERSION = "1.0" as const;
+export const SIA_VERSION = "1.0" as const;
 export const REPORT_VERSION = "1.0" as const;
 
 export type RiskLevel = "low" | "medium" | "high";
@@ -139,8 +139,8 @@ export interface ComponentManifest {
   };
 }
 
-export interface AsiManifest {
-  asi: typeof ASI_VERSION;
+export interface SiaManifest {
+  sia: typeof SIA_VERSION;
   app: AppInfo;
   pages: PageSummary[];
   pageDetails: Record<string, PageDetail>;
@@ -199,7 +199,7 @@ export interface AgentRunResult {
 }
 
 export interface AgentReport {
-  asi_report: typeof REPORT_VERSION;
+  sia_report: typeof REPORT_VERSION;
   timestamp: string;
   agent: string;
   app: string;

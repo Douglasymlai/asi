@@ -1,11 +1,11 @@
 import {
-  ASI_VERSION,
+  SIA_VERSION,
   REPORT_VERSION,
   ActionManifest,
   AgentReport,
   AsiConfig,
   AsiFramework,
-  AsiManifest,
+  SiaManifest,
   AsiRouter,
   AsiSurface,
   ComponentManifest,
@@ -258,8 +258,8 @@ export function validateManifest(manifest: unknown): ValidationIssue[] {
   if (!isObject(manifest)) {
     return [{ path: "$", message: "Manifest must be an object", severity: "error" }];
   }
-  if (manifest.asi !== ASI_VERSION) {
-    issues.push({ path: "$.asi", message: `Expected ASI version ${ASI_VERSION}`, severity: "error" });
+  if (manifest.sia !== SIA_VERSION) {
+    issues.push({ path: "$.sia", message: `Expected SIA version ${SIA_VERSION}`, severity: "error" });
   }
   if (!isObject(manifest.app)) {
     issues.push({ path: "$.app", message: "Expected app object", severity: "error" });
@@ -300,7 +300,7 @@ export function validateManifest(manifest: unknown): ValidationIssue[] {
     return issues;
   }
 
-  const typedManifest = manifest as unknown as AsiManifest;
+  const typedManifest = manifest as unknown as SiaManifest;
   for (const page of typedManifest.pages) {
     if (!typedManifest.pageDetails[page.id]) {
       issues.push({
@@ -383,8 +383,8 @@ export function validateReport(report: unknown): ValidationIssue[] {
   if (!isObject(report)) {
     return [{ path: "$", message: "Report must be an object", severity: "error" }];
   }
-  if (report.asi_report !== REPORT_VERSION) {
-    issues.push({ path: "$.asi_report", message: `Expected report version ${REPORT_VERSION}`, severity: "error" });
+  if (report.sia_report !== REPORT_VERSION) {
+    issues.push({ path: "$.sia_report", message: `Expected report version ${REPORT_VERSION}`, severity: "error" });
   }
   expectString(report.timestamp, "$.timestamp", issues);
   expectString(report.agent, "$.agent", issues);
@@ -429,7 +429,7 @@ export function formatIssues(issues: ValidationIssue[]): string {
     .join("\n");
 }
 
-export function assertValidManifest(manifest: AsiManifest): AsiManifest {
+export function assertValidManifest(manifest: SiaManifest): SiaManifest {
   const issues = validateManifest(manifest);
   if (issues.some((issue) => issue.severity === "error")) {
     throw new Error(formatIssues(issues));

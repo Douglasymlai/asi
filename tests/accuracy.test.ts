@@ -9,7 +9,7 @@ import { validateManifest } from "../src/specs/validation.js";
 const UNANNOTATED_ROOT = path.join(process.cwd(), "tests/fixtures/unannotated-app");
 
 function copyUnannotatedApp(): string {
-  const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "asi-unannotated-"));
+  const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "sia-unannotated-"));
   fs.cpSync(UNANNOTATED_ROOT, tempRoot, { recursive: true });
   return tempRoot;
 }
@@ -146,7 +146,7 @@ test("unannotated app: purpose falls back to h1 heading text", () => {
 });
 
 test("scanner accuracy comparison: annotated vs unannotated", () => {
-  const annotatedRoot = fs.mkdtempSync(path.join(os.tmpdir(), "asi-annotated-"));
+  const annotatedRoot = fs.mkdtempSync(path.join(os.tmpdir(), "sia-annotated-"));
   fs.cpSync(path.join(process.cwd(), "tests/fixtures/fixture-app"), annotatedRoot, { recursive: true });
   const annotated = scanProject(annotatedRoot);
 

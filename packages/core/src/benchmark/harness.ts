@@ -1,7 +1,7 @@
-import { AgentRunResult, AsiManifest, BenchmarkTask } from "../specs/contracts.js";
+import { AgentRunResult, SiaManifest, BenchmarkTask } from "../specs/contracts.js";
 
 /**
- * Benchmark harness for evaluating agent performance with/without ASI manifests.
+ * Benchmark harness for evaluating agent performance with/without SIA manifests.
  *
  * This module defines the protocol and types for running agent benchmarks.
  * The actual agent execution is delegated to an adapter function — this
@@ -19,13 +19,13 @@ export interface AgentAdapter {
   execute(
     task: BenchmarkTask,
     condition: AgentCondition,
-    manifest?: Partial<AsiManifest>
+    manifest?: Partial<SiaManifest>
   ): Promise<AgentRunResult>;
 }
 
 export interface HarnessConfig {
   tasks: BenchmarkTask[];
-  manifest: AsiManifest;
+  manifest: SiaManifest;
   adapter: AgentAdapter;
   conditions: AgentCondition[];
   onTaskComplete?: (result: AgentRunResult) => void;
@@ -36,13 +36,13 @@ export interface HarnessResult {
   byCondition: Record<string, AgentRunResult[]>;
 }
 
-function filterManifest(manifest: AsiManifest, condition: AgentCondition): Partial<AsiManifest> | undefined {
+function filterManifest(manifest: SiaManifest, condition: AgentCondition): Partial<SiaManifest> | undefined {
   switch (condition) {
     case "baseline":
       return undefined;
     case "pages_only":
       return {
-        asi: manifest.asi,
+        sia: manifest.sia,
         app: manifest.app,
         pages: manifest.pages,
         pageDetails: Object.fromEntries(
@@ -56,7 +56,7 @@ function filterManifest(manifest: AsiManifest, condition: AgentCondition): Parti
       };
     case "pages_workflows":
       return {
-        asi: manifest.asi,
+        sia: manifest.sia,
         app: manifest.app,
         pages: manifest.pages,
         pageDetails: manifest.pageDetails,
@@ -88,7 +88,7 @@ export async function runBenchmark(config: HarnessConfig): Promise<HarnessResult
 }
 
 export function generateBenchmarkReport(harness: HarnessResult): string {
-  const lines: string[] = ["=== ASI Benchmark Report ===", ""];
+  const lines: string[] = ["=== SIA Benchmark Report ===", ""];
 
   for (const [condition, results] of Object.entries(harness.byCondition)) {
     const total = results.length || 1;

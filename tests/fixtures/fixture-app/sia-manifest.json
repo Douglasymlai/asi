@@ -1,5 +1,5 @@
 {
-  "asi": "1.0",
+  "sia": "1.0",
   "app": {
     "name": "fixture-store-admin",
     "framework": "next",
@@ -590,7 +590,7 @@
           "notification"
         ],
         "reversible": false,
-        "sourceFile": "workflows/cancel-order.asi.md"
+        "sourceFile": "workflows/cancel-order.sia.md"
       }
     },
     "create-product": {
@@ -655,7 +655,7 @@
           "state_change"
         ],
         "reversible": true,
-        "sourceFile": "workflows/create-product.asi.md"
+        "sourceFile": "workflows/create-product.sia.md"
       }
     },
     "edit-shipping-address": {
@@ -724,7 +724,7 @@
           "state_change"
         ],
         "reversible": true,
-        "sourceFile": "workflows/edit-shipping.asi.md"
+        "sourceFile": "workflows/edit-shipping.sia.md"
       }
     },
     "refund-order": {
@@ -805,7 +805,7 @@
           "state_change"
         ],
         "reversible": false,
-        "sourceFile": "workflows/refund-order.asi.md"
+        "sourceFile": "workflows/refund-order.sia.md"
       }
     }
   },

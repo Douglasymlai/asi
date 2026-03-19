@@ -1,22 +1,17 @@
 {
-  "framework": "react",
+  "framework": "next",
   "surface": "web",
-  "router": "react-router",
+  "router": "next-app",
   "srcDir": "src",
-  "routesDir": "src/pages",
-  "routerConfigFile": "src/App.tsx",
+  "routesDir": "src/app",
   "workflowsDir": "workflows",
-  "outputFile": "asi-manifest.json",
-  "cacheDir": ".asi",
+  "outputFile": "sia-manifest.json",
+  "cacheDir": ".sia",
   "componentDirs": ["src/components/ui"],
   "designSystem": {
     "buttonComponent": "Button",
     "destructiveVariant": "destructive",
     "modalComponent": "Dialog"
-  },
-  "app": {
-    "name": "react-shadcn-admin",
-    "domain": "operations"
   },
   "overrides": {
     "pages": {},

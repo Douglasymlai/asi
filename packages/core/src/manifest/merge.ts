@@ -1,12 +1,12 @@
 import path from "node:path";
-import { AsiManifest, WorkflowDetail } from "../specs/contracts.js";
+import { SiaManifest, WorkflowDetail } from "../specs/contracts.js";
 import { assertValidManifest } from "../specs/validation.js";
 import { listFiles } from "../utils/fs.js";
 import { loadConfig } from "../config/index.js";
 import { parseWorkflowFile } from "../compiler/dsl.js";
 
 export interface MergeResult {
-  manifest: AsiManifest;
+  manifest: SiaManifest;
   warnings: string[];
 }
 
@@ -37,10 +37,10 @@ function createReporting(workflow: WorkflowDetail, entityType?: string): Workflo
   };
 }
 
-export function mergeAuthoredWorkflows(projectRoot: string, manifest: AsiManifest): MergeResult {
+export function mergeAuthoredWorkflows(projectRoot: string, manifest: SiaManifest): MergeResult {
   const config = loadConfig(projectRoot);
   const workflowDir = path.join(projectRoot, config.workflowsDir);
-  const workflowFiles = listFiles(workflowDir, (filePath) => filePath.endsWith(".asi.md"));
+  const workflowFiles = listFiles(workflowDir, (filePath) => filePath.endsWith(".sia.md"));
   const workflowDetails: Record<string, WorkflowDetail> = { ...manifest.workflowDetails };
   const warnings: string[] = [];
 
@@ -101,7 +101,7 @@ export function mergeAuthoredWorkflows(projectRoot: string, manifest: AsiManifes
     }
   }
 
-  const compiled: AsiManifest = {
+  const compiled: SiaManifest = {
     ...manifest,
     workflowDetails,
     metadata: {

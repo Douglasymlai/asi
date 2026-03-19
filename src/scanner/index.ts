@@ -12,7 +12,7 @@ function resolveFrameworkAdapter(config: AsiConfig) {
     case "react":
       return reactFrameworkAdapter;
     default:
-      throw new Error(`Unsupported ASI framework '${config.framework}'`);
+      throw new Error(`Unsupported SIA framework '${config.framework}'`);
   }
 }
 

@@ -1,6 +1,6 @@
 dist
 node_modules
-.asi
+.sia
 .npm-cache
 *.tgz
 planning

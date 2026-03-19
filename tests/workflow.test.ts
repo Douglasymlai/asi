@@ -6,13 +6,13 @@ import { readJsonFile } from "../src/utils/fs.js";
 import { scanProject } from "../src/scanner/index.js";
 import { mergeAuthoredWorkflows } from "../src/manifest/merge.js";
 import { validateManifest } from "../src/specs/validation.js";
-import { AsiManifest } from "../src/specs/contracts.js";
+import { SiaManifest } from "../src/specs/contracts.js";
 import { GOLDEN_MANIFEST_PATH, copyFixtureApp, normalizeManifest } from "./helpers.js";
 
 test("compiled manifest matches the golden fixture", () => {
   const projectRoot = copyFixtureApp();
   const { manifest: compiled } = mergeAuthoredWorkflows(projectRoot, scanProject(projectRoot));
-  const golden = readJsonFile<AsiManifest>(GOLDEN_MANIFEST_PATH);
+  const golden = readJsonFile<SiaManifest>(GOLDEN_MANIFEST_PATH);
   assert.deepEqual(normalizeManifest(compiled), normalizeManifest(golden));
   assert.deepEqual(validateManifest(compiled), []);
 });
@@ -47,7 +47,7 @@ test("workflow merge emits warnings for unmatched triggers", () => {
 - sideEffects: none
 - reversible: true
 `;
-  fs.writeFileSync(path.join(projectRoot, "workflows", "orphan.asi.md"), unmatchedWorkflow);
+  fs.writeFileSync(path.join(projectRoot, "workflows", "orphan.sia.md"), unmatchedWorkflow);
 
   const { manifest, warnings } = mergeAuthoredWorkflows(projectRoot, scanProject(projectRoot));
   assert.ok(warnings.length > 0, "should have warnings");
